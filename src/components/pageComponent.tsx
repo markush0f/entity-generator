@@ -12,6 +12,9 @@ const PageComponent = ({ entities }: { entities: IEntity[] }) => {
     const handleSelectEntity = (entity: IEntity) => {
         setSelectedEntity(entity);
     };
+    const other = () => {
+        console.log('Entity selected:');
+    }
 
     return (
         <div className="grid grid-cols-5">
@@ -26,6 +29,7 @@ const PageComponent = ({ entities }: { entities: IEntity[] }) => {
                 {/* {selectedEntity && <EntityJava entity={selectedEntity} />} */}
                 <EntityJava entity={selectedEntity} />
             </div>
+ 
         </div>
     );
 };
