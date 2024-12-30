@@ -1,11 +1,107 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/navbar.astro";
+import type IEntity from "../types/Entity.type";
+import Aside from "../components/aside.astro";
+import EntityJava from "../components/entityJava.astro";
+import EntityGenerator from "../components/entityGenerator.astro";
+import LogoTop from "../components/logoTop.astro";
+const entities: IEntity[] = [
+  {
+    className: "User",
+    fields: [
+      {
+        name: "name",
+        getter: true,
+        setter: true,
+        type: "string",
+        nullable: false,
+      },
+      {
+        name: "surname",
+        getter: true,
+        setter: true,
+        type: "string",
+        nullable: false,
+      },
+      {
+        name: "birth",
+        getter: true,
+        setter: true,
+        type: "LocalDateTime",
+        nullable: false,
+      },
+    ],
+    lombok: false,
+    language: "java",
+    createdAt: new Date("2021-10-10"),
+  },
+  {
+    className: "User",
+    fields: [
+      {
+        name: "name",
+        getter: true,
+        setter: true,
+        type: "string",
+        nullable: false,
+      },
+    ],
+    lombok: false,
+    language: "java",
+    createdAt: new Date("2021-10-10"),
+  },
+  {
+    className: "User",
+    fields: [
+      {
+        name: "name",
+        getter: true,
+        setter: true,
+        type: "string",
+        nullable: false,
+      },
+    ],
+    lombok: false,
+    language: "java",
+    createdAt: new Date("2021-10-10"),
+  },
+];
 ---
 
+<!-- <Layout>
+  <div class="grid grid-rows-[60px_1fr] h-full">
+    <Navbar class="flex-none" />
+    <div class="grid grid-cols-[auto_1fr] h-full overflow-hidden">
+      <Aside entities={entities} />
+      <div class="grid grid-cols-2 gap-4 col-span-1 overflow-y-hidden">
+        <div class="overflow-y-auto h-full">
+          <EntityGenerator />
+        </div>
+        <div class="overflow-y-auto h-full">
+          <EntityJava entity={entities[0]} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout> --><!-- <Layout>
+  <Aside entities={entities} />
+  <EntityGenerator />
+  <EntityJava entity={entities[0]} />
+</Layout> -->
 <Layout>
-	<Welcome />
+  <LogoTop />
+
+  <div class="grid grid-cols-5">
+    <div class="row-span-5 ml-20 mt-20">
+      <Aside entities={entities} />
+    </div>
+
+    <div class="col-span-2 row-span-5">
+      <EntityGenerator />
+    </div>
+    <div class="col-span-2 row-span-5 col-start-4 mt-20">
+      <EntityJava entity={entities[0]} />
+    </div>
+  </div>
 </Layout>

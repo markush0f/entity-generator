@@ -1,0 +1,64 @@
+---
+import type Entity from "../types/Entity.type";
+
+export interface Props {
+  entity: Entity;
+}
+const { entity } = Astro.props as Props;
+const { className, fields, lombok, language, createdAt } = entity;
+
+const allFields = fields.map((field) => {
+  const { name, type, nullable } = field;
+  return `  <span class="text-green-500">private</span> <span class="text-blue-500">${type}</span> ${name}${nullable ? "?" : ""};\n`;
+});
+
+const gettersFields = fields.map((field) => {
+  const { name, type, nullable } = field;
+  return `  <span class="text-green-500">public</span> <span class="text-blue-600">${type}</span> get${name.charAt(0).toUpperCase() + name.slice(1)}() {\n     return ${name};\n  }\n`;
+});
+
+const settersFields = fields.map((field) => {
+  const { name, type, nullable } = field;
+  return `  <span class="text-green-500">public</span> <span class="text-blue-600">${type}</span> set${name.charAt(0).toUpperCase() + name.slice(1)}(<span class="text-blue-600">${type}</span> ${name}) {\n     this.${name} = ${name};\n  }\n`;
+});
+
+const codeString = [
+  `<span class="text-green-500">public class</span> ${className} {`,
+  "",
+  ...allFields,
+  ...gettersFields,
+  ...settersFields,
+  "}",
+].join("\n");
+---
+
+<div
+  class="text-white bg-codebg border border-gray-700 rounded overflow-auto max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] scrollbar"
+>
+  <pre
+    class="code-font">
+    {codeString.split("\n").map((line, index) => (
+      <div class="flex items-start transition-all duration-300 code-line">
+        <span class="w-[30px] text-right mr-[10px] text-white/50 select-none">{index + 1}</span>
+        <span set:html={line} />
+      </div>
+    ))}
+  </pre>
+</div>
+<style>
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #4c566a #2e3440;
+  }
+
+  .code-font {
+    font-family: "Cascadia code", "monospace";
+    font-size: 16px;
+    font-weight: 360;
+  }
+
+  .code-line:hover {
+    background-color: #3b4252;
+    color: #88c0d0;
+  }
+</style>
