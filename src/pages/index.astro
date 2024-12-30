@@ -69,26 +69,6 @@ const entities: IEntity[] = [
 ];
 ---
 
-<!-- <Layout>
-  <div class="grid grid-rows-[60px_1fr] h-full">
-    <Navbar class="flex-none" />
-    <div class="grid grid-cols-[auto_1fr] h-full overflow-hidden">
-      <Aside entities={entities} />
-      <div class="grid grid-cols-2 gap-4 col-span-1 overflow-y-hidden">
-        <div class="overflow-y-auto h-full">
-          <EntityGenerator />
-        </div>
-        <div class="overflow-y-auto h-full">
-          <EntityJava entity={entities[0]} />
-        </div>
-      </div>
-    </div>
-  </div>
-</Layout> --><!-- <Layout>
-  <Aside entities={entities} />
-  <EntityGenerator />
-  <EntityJava entity={entities[0]} />
-</Layout> -->
 <Layout>
   <LogoTop />
 
@@ -98,7 +78,7 @@ const entities: IEntity[] = [
     </div>
 
     <div class="col-span-2 row-span-5">
-      <EntityGenerator />
+      <!-- <EntityGenerator /> -->
     </div>
     <div class="col-span-2 row-span-5 col-start-4 mt-20">
       <EntityJava entity={entities[0]} />
