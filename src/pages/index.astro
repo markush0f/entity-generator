@@ -3,7 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import type IEntity from "../types/Entity.type";
 import Aside from "../components/aside";
 import LogoTop from "../components/logoTop.astro";
+import PageComponent from "../components/pageComponent";
 import EntityJava from "../components/entityJava";
+import { useState } from "react";
 
 const entities: IEntity[] = [
   {
@@ -70,39 +72,13 @@ const entities: IEntity[] = [
   },
 ];
 
-const [selectedEntity, setSelectedEntity] = useState<IEntity | null>(null);
-
+let selectedEntity = entities[0];
 const handleSelectEntity = (entity: IEntity) => {
-  setSelectedEntity(entity);
+  selectedEntity = entity;
 };
 ---
 
 <Layout>
   <LogoTop />
-
-  <div class="grid grid-cols-5">
-    <div class="row-span-5 ml-20 mt-20">
-      <!-- Pasamos las entidades y la función para seleccionar una entidad a `Aside` -->
-      <Aside
-        entities={entities}
-        onSelectEntity={handleSelectEntity}
-        client:load
-      />
-    </div>
-
-    <div class="col-span-2 row-span-5 mt-20">
-      <!-- Aquí puedes agregar otro contenido si es necesario -->
-    </div>
-
-    <div class="col-span-2 row-span-5 col-start-4 mt-20">
-      <!-- Si se seleccionó una entidad, mostramos `EntityJava`, de lo contrario, mostramos un mensaje -->
-      {
-        selectedEntity ? (
-          <EntityJava entity={selectedEntity} client:load />
-        ) : (
-          <p>No entity selected</p>
-        )
-      }
-    </div>
-  </div>
+  <PageComponent entities={entities} />
 </Layout>
