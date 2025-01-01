@@ -10,7 +10,7 @@ interface Props {
 
 const Aside: React.FC<Props> = ({ entities, onSelectEntity }) => {
   return (
-    <aside className="w-64 bg-codebg text-white flex flex-col max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] overflow-auto border border-gray-700 rounded">
+    <aside className="w-64 bg-coebg text-white flex flex-col max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] overflow-auto border border-gray-700 rounded">
       <h1 className="p-4 text-lg font-bold border-b border-gray-700">Entities created</h1>
       <nav className="flex-1 p-4 overflow-y-auto">
         <ul>

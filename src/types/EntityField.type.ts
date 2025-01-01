@@ -2,7 +2,7 @@
 export default interface EntityField {
     name: string;
     type: string;
-    nullable: boolean;
+    nullable?: boolean;
     getter: boolean;
     setter: boolean;
 }

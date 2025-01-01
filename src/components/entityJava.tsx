@@ -58,7 +58,7 @@ const EntityJava: React.FC<Props> = ({ entity }) => {
 
   return (
     <div className="mr-20 text-white bg-codebg border border-gray-700 rounded overflow-auto max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] scrollbar">
-      <pre className="code-font">
+      <pre className="font-code text-lg">
         {codeString.split("\n").map((line, index) => (
           <div className="flex items-start transition-all duration-300 code-line" key={index}>
             <span className="w-[30px] text-right mr-[10px] text-white/50 select-none">{index + 1}</span>

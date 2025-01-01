@@ -1,11 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import type IEntity from "../types/Entity.type";
-import Aside from "../components/aside";
 import LogoTop from "../components/logoTop.astro";
 import PageComponent from "../components/pageComponent";
-import EntityJava from "../components/entityJava";
-import { useState } from "react";
 
 const entities: IEntity[] = [
   {
@@ -72,10 +69,7 @@ const entities: IEntity[] = [
   },
 ];
 
-let selectedEntity = entities[0];
-const handleSelectEntity = (entity: IEntity) => {
-  selectedEntity = entity;
-};
+
 ---
 
 <Layout>
