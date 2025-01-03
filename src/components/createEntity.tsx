@@ -1,47 +1,55 @@
 import React, { useState } from 'react';
-import type EntityField from '../types/EntityField.type';
+import type IEntity from '../types/Entity.type';
 
-const CreateEntity = () => {
-    const [fields, setFields] = useState<EntityField[]>([]);
+interface Props {
+    onAddEntity: (entity: IEntity) => void;
+}
+
+const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
     const [className, setClassName] = useState('');
-    const [language, setLanguage] = useState('Java'); // Predeterminado a 'Java'
-    const [showAddField, setShowAddField] = useState(false);
+    const [language, setLanguage] = useState<'java' | 'typescript'>('java');
+    const [errors, setErrors] = useState<{ className?: string; language?: string }>({});
 
-    const toggleFields = () => {
-        setShowAddField(!showAddField);
-    };
+    const validate = () => {
+        const validationErrors: { className?: string; language?: string } = {};
 
-    const addFieldForm = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        if (!className.trim()) {
+            validationErrors.className = 'Class name is required.';
+        } else if (!/^[A-Z][a-zA-Z0-9]*$/.test(className)) {
+            validationErrors.className =
+                'Class name must start with an uppercase letter and contain only letters and numbers.';
+        }
 
-        const fieldName = (e.currentTarget.fieldName as HTMLInputElement).value;
-        const fieldType = (e.currentTarget.fieldType as HTMLInputElement).value;
-        const setter = (e.currentTarget.setter as HTMLInputElement).checked;
-        const getter = (e.currentTarget.getter as HTMLInputElement).checked;
+        if (!language) {
+            validationErrors.language = 'Language is required.';
+        } else if (!['java', 'typescript'].includes(language)) {
+            validationErrors.language = 'Language must be "java" or "typescript".';
+        }
 
-        setFields((prevFields) => [
-            ...prevFields,
-            { name: fieldName, type: fieldType, setter, getter },
-        ]);
+        setErrors(validationErrors);
 
-        e.currentTarget.reset(); // Resetea el formulario
-        toggleFields(); // Cierra el formulario después de agregar un campo
+        return Object.keys(validationErrors).length === 0;
     };
 
     const createEntity = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const entity = {
+        if (!validate()) {
+            return;
+        }
+        const newEntity: IEntity = {
+            id: Date.now(),
             className,
             language,
-            fields,
+            fields: [],
+            lombok: false,
+            createdAt: new Date(),
         };
 
-        console.log('Entidad creada:', entity);
-
-        setFields([]);
+        onAddEntity(newEntity);
         setClassName('');
-        setLanguage('Java');
+        setLanguage('java');
+        setErrors({});
     };
 
     return (
@@ -59,8 +67,12 @@ const CreateEntity = () => {
                             id="className"
                             value={className}
                             onChange={(e) => setClassName(e.target.value)}
-                            className="w-full border border-gray-300 bg-codebg rounded-md shadow-sm focus:outline-none px-2 py-2"
+                            className={`w-full border rounded-md shadow-sm focus:outline-none px-2 py-2 ${errors.className ? 'border-red-500 bg-codebg' : 'border-gray-300 bg-codebg'
+                                }`}
                         />
+                        {errors.className && (
+                            <p className="text-red-500 text-sm mt-1">{errors.className}</p>
+                        )}
                     </div>
                     <div>
                         <label htmlFor="language" className="block font-medium mb-1">
@@ -70,106 +82,23 @@ const CreateEntity = () => {
                             type="text"
                             id="language"
                             value={language}
-                            onChange={(e) => setLanguage(e.target.value)}
-                            className="w-full border border-gray-300 bg-codebg rounded-md shadow-sm focus:outline-none px-2 py-2"
+                            onChange={(e) => setLanguage(e.target.value as 'java' | 'typescript')}
+                            className={`w-full border rounded-md shadow-sm focus:outline-none px-2 py-2 ${errors.language ? 'border-red-500 bg-codebg' : 'border-gray-300 bg-codebg'
+                                }`}
                         />
+                        {errors.language && (
+                            <p className="text-red-500 text-sm mt-1">{errors.language}</p>
+                        )}
                     </div>
                     <button
                         type="submit"
-                        className="w-full mt-4 border-2 border-codebg  hover:border-green-600 text-white py-2 px-4 rounded-lg focus:outline-none"
+                        className="w-full mt-4 border-2 border-codebg hover:border-green-600 text-white py-2 px-4 rounded-lg focus:outline-none"
                     >
                         Create Entity
                     </button>
                 </form>
-
-                {fields.length > 0 && (
-                    <div className="mt-6">
-                        <h2 className="text-lg font-semibold">Fields</h2>
-                        <ul className="list-disc list-inside space-y-2">
-                            {fields.map((field, index) => (
-                                <li key={`${field.name}-${index}`} className="">
-                                    <span className="font-medium">{field.name}</span> : {field.type}
-                                    {field.getter && ' (Getter)'}
-                                    {field.setter && ' (Setter)'}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                {showAddField ? (
-                    <form onSubmit={addFieldForm} className="space-y-4 mt-4">
-                        <p className="text-xl text-gray-500">Adding field...</p>
-                        <div>
-                            <label htmlFor="fieldName" className="block font-medium mb-1">
-                                Field name:
-                            </label>
-                            <input
-                                type="text"
-                                id="fieldName"
-                                name="fieldName"
-                                className="w-full border border-gray-300 bg-codebg rounded-md shadow-sm focus:outline-none px-2 py-2"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="fieldType" className="block font-medium mb-1">
-                                Type:
-                            </label>
-                            <input
-                                type="text"
-                                id="fieldType"
-                                name="fieldType"
-                                className="w-full border border-gray-300 bg-codebg rounded-md shadow-sm focus:outline-none px-2 py-2"
-                            />
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <label className="flex items-center space-x-2">
-                                <span className="text-sm font-medium">Setter</span>
-                                <input
-                                    type="checkbox"
-                                    id="setter"
-                                    name="setter"
-                                    className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500 focus:outline-none"
-                                />
-                            </label>
-                            <label className="flex items-center space-x-2">
-                                <span className="text-sm font-medium">Getter</span>
-                                <input
-                                    type="checkbox"
-                                    id="getter"
-                                    name="getter"
-                                    className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500 focus:outline-none"
-                                />
-                            </label>
-                        </div>
-                        <div className="flex space-x-4">
-                            <button
-                                onClick={toggleFields}
-                                type="button"
-                                className="w-full border-2 border-codebg  hover:border-red-600 text-white py-2 px-4 rounded-lg focus:outline-none"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                className="w-full border-2 border-codebg  hover:border-green-600 text-white py-2 px-4 rounded-lg focus:outline-none"
-                            >
-                                Accept
-                            </button>
-                        </div>
-                    </form>
-                ) : (
-                    <button
-                        onClick={toggleFields}
-                        type="button"
-                        className="w-full mt-4 border-2 border-codebg  hover:border-blue-600 text-white py-2 px-4 rounded-lg focus:outline-none"
-                    >
-                        Add Field
-                    </button>
-                )}
             </div>
         </div>
-
     );
 };
 
