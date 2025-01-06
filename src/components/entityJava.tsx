@@ -46,12 +46,32 @@ const EntityJava: React.FC<Props> = ({ entity }) => {
 
   const gettersFields = fields.map((field) => formatMethod(field, 'get'));
   const settersFields = fields.map((field) => formatMethod(field, 'set'));
+
+  const defaultConstructor = `
+\t<span class="text-green-500">public</span> <span class="text-yellow-300">${className}</span><span class="text-blue-400">()</span> <span class="text-yellow-400">{</span>
+\t<span class="text-yellow-400">}</span>
+  `;
+
+
+  const allArgsConstructorParams = fields
+    .map((field) => `<span class="text-blue-500">${field.type}</span> <span class="text-white">${field.name}</span>`)
+    .join(", ");
+  const allArgsConstructorBody = fields
+    .map((field) => `\t\t<span class="text-blue-400">this.</span><span class="text-white">${field.name}</span> = ${field.name};`)
+    .join("\n");
+
+  const allArgsConstructor = `
+\t<span class="text-green-500">public</span> <span class="text-yellow-300">${className}</span><span class="text-blue-400">(${allArgsConstructorParams})</span> <span class="text-yellow-400">{</span>
+${allArgsConstructorBody}
+\t<span class="text-yellow-400">}</span>
+  `;
+
   const codeString = [
     `<span class="text-green-500">public class</span> <span class="text-yellow-300">${className}</span> <span class="text-blue-400">{</span>`,
     ...allFields,
-    "",
+    defaultConstructor,
+    allArgsConstructor,
     ...gettersFields,
-    "",
     ...settersFields,
     `<span class="text-blue-400">}</span>`,
   ].join("\n");
@@ -87,7 +107,7 @@ const EntityJava: React.FC<Props> = ({ entity }) => {
 
       <button
         onClick={handleCopy}
-        className={`absolute top-2 right-24  py-2 px-4  transition-all duration-300 ${isCopied ? " text-green-500" : "text-white"
+        className={`absolute top-2 right-24 py-2 px-4 transition-all duration-300 ${isCopied ? "text-green-500" : "text-white"
           }`}
       >
         {isCopied ? "¡Copiado!" : "Copiar"}
