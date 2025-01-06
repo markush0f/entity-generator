@@ -1,14 +1,14 @@
-// FieldForm.tsx
+// CreateField.tsx
 import React from 'react';
 
 interface Props {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  addFieldForm: (e: React.FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
 }
 
-const FieldForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
+const CreateField: React.FC<Props> = ({ addFieldForm, onCancel }) => {
   return (
-    <form onSubmit={onSubmit} className="space-y-4 mt-4">
+    <form onSubmit={addFieldForm} className="space-y-4 mt-4">
       <p className="text-xl text-gray-500">Adding field...</p>
       <div>
         <label htmlFor="fieldName" className="block font-medium mb-1">
@@ -71,4 +71,4 @@ const FieldForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   );
 };
 
-export default FieldForm;
+export default CreateField;

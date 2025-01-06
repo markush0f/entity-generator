@@ -6,7 +6,7 @@ import EntityHistory from './entityHistory';
 interface Props {
   entities: IEntity[];
   onSelectEntity: (entity: IEntity) => void;
-  setEntities: (entities: IEntity[]) => void; // Para actualizar las entidades
+  setEntities: (entities: IEntity[]) => void;
 }
 
 const Aside: React.FC<Props> = ({ entities, onSelectEntity, setEntities }) => {
@@ -14,28 +14,48 @@ const Aside: React.FC<Props> = ({ entities, onSelectEntity, setEntities }) => {
     const updatedEntities = entities.filter(
       (entity) => entity.className !== entityToRemove.className
     );
-    setEntities(updatedEntities); // Actualiza el estado de las entidades
-    localStorage.setItem('entities', JSON.stringify(updatedEntities)); // Actualiza el almacenamiento local
+    setEntities(updatedEntities);
+    localStorage.setItem('entities', JSON.stringify(updatedEntities));
   };
 
+  const editEntity = (updatedEntity: IEntity) => {
+    const updatedEntities = entities.map((entity) =>
+      entity.id === updatedEntity.id ? updatedEntity : entity
+    );
+    setEntities(updatedEntities);
+    localStorage.setItem('entities', JSON.stringify(updatedEntities));
+  };
+
+
   return (
-    <aside className="w-64 bg-coebg text-white flex flex-col max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] overflow-auto border border-gray-700 rounded">
+    <aside className="w-full sm:w-64 bg-coebg text-white flex flex-col max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] overflow-auto border border-gray-700 rounded">
       <h1 className="p-4 text-lg font-bold border-b border-gray-700">Entities created</h1>
       <nav className="flex-1 p-4 overflow-y-auto">
         <ul>
           {entities.map((entity) => (
-            <li key={entity.className} className="flex items-center justify-between mb-2">
+            <li key={entity.id} className="flex items-center justify-between mb-2 hover:text-gray-300">
               <EntityHistory
                 entity={entity}
                 onSelectEntity={onSelectEntity}
               />
               <button
                 onClick={() => removeEntity(entity)}
-                className="text-red-500 hover:text-red-700"
+                className="text-red-500 hover:text-red-700 transform hover:scale-110 transition-transform duration-200"
               >
                 <img
-                  src='/icons/x-marc.svg'
+                  width="20px"
+                  src="icons/x.svg"
                   alt="Delete"
+                />
+              </button>
+              <button
+                onClick={() => editEntity(entity)}
+                className="ml-2 text-red-500 hover:text-red-700 transform hover:scale-110 transition-transform duration-200"
+              >
+                <img
+                  width="20px"
+                  src="icons/edit.svg"
+                  alt="Edit"
                 />
               </button>
             </li>
@@ -48,6 +68,8 @@ const Aside: React.FC<Props> = ({ entities, onSelectEntity, setEntities }) => {
         </button>
       </div>
     </aside>
+
+
   );
 };
 

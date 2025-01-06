@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import type IEntity from '../types/Entity.type';
-import Aside from './Aside';
-import CreateEntity from './CreateEntity';
-import EntityJava from './EntityJava';
+import Aside from './aside';
+import CreateEntity from './createEntity';
+import EntityJava from './entityJava';
+
 
 const PageComponent = () => {
     const [entities, setEntities] = useState<IEntity[]>([]);
@@ -29,26 +30,13 @@ const PageComponent = () => {
         setSelectedEntity(entity);
     };
 
-    const handleRemoveEntity = (entityToRemove: IEntity) => {
-        const updatedEntities = entities.filter(
-            (entity) => entity.className !== entityToRemove.className
-        );
-        setEntities(updatedEntities);
-        localStorage.setItem('entities', JSON.stringify(updatedEntities));
-
-        // Actualiza la entidad seleccionada si la eliminada estaba seleccionada
-        if (selectedEntity?.className === entityToRemove.className) {
-            setSelectedEntity(updatedEntities.length > 0 ? updatedEntities[0] : null);
-        }
-    };
-
     return (
         <div className="grid grid-cols-5">
             <div className="row-span-5 ml-20 mt-20">
                 <Aside
                     entities={entities}
                     onSelectEntity={handleSelectEntity}
-
+                    setEntities={setEntities}
                 />
             </div>
             <div className="col-span-2 row-span-5 mt-20">
