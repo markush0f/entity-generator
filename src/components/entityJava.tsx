@@ -121,7 +121,7 @@ ${allArgsConstructorBody}
       >
         {isCopied ? "¡Copiado!" : "Copiar"}
       </button>
-      <button onClick={handleDownload}>
+      <button onClick={handleDownload} className="w-full mr-20">
         Download
       </button>
     </div>

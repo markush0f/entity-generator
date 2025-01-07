@@ -77,6 +77,10 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
     setClassName('');
     setVoidConstructor(false);
   };
+  const cancelField = (fieldName: string) => {
+    const fieldsUpdated = fields.filter((field) => field.name !== fieldName);
+    setFields(fieldsUpdated);
+  }
 
   return (
     <div className="p-8">
@@ -127,6 +131,7 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
               {fields.map((field, index) => (
                 <li key={`${field.name}-${index}`}>
                   <span className="font-medium">{field.name}</span> : {field.type}
+                  <button onClick={() => cancelField(field.name)} className='ml-4'> <img src="/icons/delete.svg" alt="delete" width={40}/></button>
                   {field.getter && ' (Getter)'}
                   {field.setter && ' (Setter)'}
                 </li>
