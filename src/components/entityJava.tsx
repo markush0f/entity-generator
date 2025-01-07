@@ -76,14 +76,23 @@ ${allArgsConstructorBody}
     `<span class="text-blue-400">}</span>`,
   ].join("\n");
 
+  const plainTextCode = codeString.replace(/<[^>]+>/g, '');
+
   const handleCopy = () => {
-    const plainTextCode = codeString.replace(/<[^>]+>/g, '');
     navigator.clipboard.writeText(plainTextCode)
       .then(() => {
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
       })
       .catch();
+  };
+  const handleDownload = () => {
+    const blob = new Blob([plainTextCode], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${className}.java`;
+    link.click();
+    URL.revokeObjectURL(link.href);
   };
 
   return (
@@ -111,6 +120,9 @@ ${allArgsConstructorBody}
           }`}
       >
         {isCopied ? "¡Copiado!" : "Copiar"}
+      </button>
+      <button onClick={handleDownload}>
+        Download
       </button>
     </div>
   );
