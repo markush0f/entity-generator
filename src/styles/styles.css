@@ -2,3 +2,27 @@
     background-color: #3b4252;
     color: #88c0d0;
   }
+
+  .aside-scrollbar {
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px; 
+    }
+    
+  
+    ::-webkit-scrollbar-track {
+      background: #3b4252;
+      border-radius: 10px;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      background: #6b6b6b;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4e4e4e;
+    }
+  }
+  

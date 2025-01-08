@@ -3,13 +3,21 @@ import type IEntity from '../types/Entity.type';
 import Aside from './aside';
 import CreateEntity from './createEntity';
 import EntityJava from './entityJava';
+import '../styles/styles.css';
+interface Props {
+    firstEntities: IEntity[];
+}
 
-
-const PageComponent = () => {
+const PageComponent: React.FC<Props> = ({ firstEntities }) => {
     const [entities, setEntities] = useState<IEntity[]>([]);
     const [selectedEntity, setSelectedEntity] = useState<IEntity | null>(null);
 
     useEffect(() => {
+        if (!localStorage.getItem('hasVisited')) {
+
+            localStorage.setItem('entities', JSON.stringify(firstEntities));
+            localStorage.setItem('hasVisited', 'true'); 
+        }
         const storedEntities = JSON.parse(localStorage.getItem('entities') || '[]');
         setEntities(storedEntities);
 

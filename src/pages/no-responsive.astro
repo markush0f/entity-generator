@@ -1,0 +1,27 @@
+<body>
+  <h1
+    class="text-3xl text-white flex justify-center items-center p-20 text-center "
+  >
+    This functionality is not available on small screens. We are working on it!
+  </h1>
+
+  <script>
+    let wasResized = false;
+
+    function checkScreenSize() {
+      if (window.innerWidth > 1024 && !wasResized) {
+        window.location.href = "/";
+        wasResized = true;
+      }
+    }
+
+    window.addEventListener("resize", checkScreenSize);
+
+    checkScreenSize();
+  </script>
+</body>
+<style>
+  body {
+    background-color: #252a33;
+  }
+</style>

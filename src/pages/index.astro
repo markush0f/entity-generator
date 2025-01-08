@@ -2,9 +2,56 @@
 import Layout from "../layouts/Layout.astro";
 import LogoTop from "../components/logoTop.astro";
 import PageComponent from "../components/pageComponent";
+import type IEntity from "../types/Entity.type";
+const firstEntities: IEntity[] = [
+  {
+    allArgsConstructor: true,
+    className: "UserLombok",
+    createdAt: new Date(),
+    fields: [
+      { name: "name", type: "String", setter: true, getter: true },
+      { name: "surname", type: "String", setter: true, getter: true },
+      { name: "birth", type: "Date", setter: true, getter: true },
+    ],
+    id: 0.45518189117305363,
+    idClass: true,
+    language: "java",
+    lombok: true,
+    voidConstructor: true,
+  },
+  {
+    allArgsConstructor: true,
+    className: "User",
+    createdAt: new Date(),
+    fields: [
+      { name: "name", type: "String", setter: true, getter: true },
+      { name: "surname", type: "Date", setter: true, getter: true },
+      { name: "birth", type: "Date", setter: true, getter: true },
+    ],
+    id: 0.8742589553775515,
+    idClass: true,
+    language: "java",
+    lombok: false,
+    voidConstructor: true,
+  },
+];
 ---
 
 <Layout>
   <LogoTop />
-  <PageComponent client:load />
+  <script>
+    let wasResized = false; 
+
+    function checkScreenSize() {
+      if (window.innerWidth < 1600 && !wasResized) {
+        window.location.href = "/no-responsive"; 
+        wasResized = true; 
+      }
+    }
+
+    window.addEventListener("resize", checkScreenSize);
+
+    checkScreenSize();
+  </script>
+  <PageComponent firstEntities={firstEntities} client:load />
 </Layout>

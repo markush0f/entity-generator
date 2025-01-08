@@ -1,44 +1,74 @@
 public class User {
+
     private String name;
-    private String email;
-    private int age;
+    private DateTime surname;
+    private DateTime birth;
+    private Boolean parents;
+    private String brothers;
+    private adad kldakda;
+    private adadad adada;
 
-    public User(String name, String email, int age) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
+    public User(String name, DateTime surname, DateTime birth, Boolean parents, String brothers, adad kldakda, adadad adada) {
+             this.name = name;
+       this.surname = surname;
+       this.birth = birth;
+       this.parents = parents;
+       this.brothers = brothers;
+       this.kldakda = kldakda;
+       this.adada = adada;
     }
 
-    public String getName() {
-        return name;
-    }
+   public String getName() {
+         return name;
+   } 
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   public DateTime getSurname() {
+         return surname;
+   } 
 
-    public String getEmail() {
-        return email;
-    }
+   public DateTime getBirth() {
+         return birth;
+   } 
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   public Boolean getParents() {
+         return parents;
+   } 
 
-    public int getAge() {
-        return age;
-    }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+   public adad getKldakda() {
+         return kldakda;
+   } 
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
-    }
+   public adadad getAdada() {
+         return adada;
+   } 
+
+   public String setName(String name) {
+         this.name = name;
+   } 
+
+   public DateTime setSurname(DateTime surname) {
+         this.surname = surname;
+   } 
+
+   public DateTime setBirth(DateTime birth) {
+         this.birth = birth;
+   } 
+
+   public Boolean setParents(Boolean parents) {
+         this.parents = parents;
+   } 
+
+   public String setBrothers(String brothers) {
+         this.brothers = brothers;
+   } 
+
+   public adad setKldakda(adad kldakda) {
+         this.kldakda = kldakda;
+   } 
+
+   public adadad setAdada(adadad adada) {
+         this.adada = adada;
+   } 
+
 }

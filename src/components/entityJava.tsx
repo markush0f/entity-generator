@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import type IEntity from '../types/Entity.type';
-import '../styles/styles.css';
 import type EntityField from '../types/EntityField.type';
 
 interface Props {
@@ -9,72 +8,84 @@ interface Props {
 
 const EntityJava: React.FC<Props> = ({ entity }) => {
   const [isCopied, setIsCopied] = useState(false);
-
-  const { className, fields } = entity;
+  const { className, fields, lombok } = entity; // Añadido lombok
+  const [isDownload, setIsDownload] = useState(false);
 
   const allFields = fields.map((field) => {
     const { name, type, nullable } = field;
-    return `\t<span class="text-green-500">private</span> <span class="text-blue-500">${type}</span> ${name}${nullable ? "?" : ""};`;
+    return `  <span class="text-green-500">private</span> <span class="text-blue-500">${type}</span> ${name}${nullable ? "?" : ""};`;
   });
 
+  const OPEN_KEY = `<span class="text-yellow-400">{</span>`;
+  const CLOSE_KEY = `<span class="text-yellow-400">}</span>`;
+  const PUBLIC = `<span class="text-green-500">public</span>`;
+  const OPEN_PARENTESIS = `<span class="text-blue-400">(</span>`;
+  const CLOSE_PARENTESIS = `<span class="text-blue-400">)</span>`;
+  const RETURN = `<span class="text-blue-400">return</span>`;
+  const THIS = `<span class="text-blue-400">this.</span>`;
+
   const formatMethod = (field: EntityField, methodType: 'get' | 'set') => {
+    if (lombok) return null;
     const { name, type } = field;
     const nameFormatted = name.charAt(0).toUpperCase() + name.slice(1);
-
-    const OPEN_KEY = `<span class="text-yellow-400">{</span>`;
-    const CLOSE_KEY = `<span class="text-yellow-400">}</span>`;
-    const PUBLIC = `<span class="text-green-500">public</span>`;
     const TYPE = `<span class="text-yellow-300">${type}</span>`;
-    const OPEN_PARENTESIS = `<span class="text-blue-400">(</span>`;
-    const CLOSE_PARENTESIS = `<span class="text-blue-400">)</span>`;
-    const RETURN = `<span class="text-blue-400">return</span>`;
-    const THIS = `<span class="text-blue-400">this.</span>`;
 
     if (methodType === 'get' && field.getter) {
-      return `\t${PUBLIC} ${TYPE} <span class="text-pink-400">get${nameFormatted}</span>${OPEN_PARENTESIS}${CLOSE_PARENTESIS} ${OPEN_KEY}
-      \t${RETURN} ${name};
-    ${CLOSE_KEY}\n`;
+      return `  ${PUBLIC} ${TYPE} <span class="text-pink-400">get${nameFormatted}</span>${OPEN_PARENTESIS}${CLOSE_PARENTESIS} ${OPEN_KEY}
+    ${RETURN} ${name};
+  ${CLOSE_KEY}\n`;
     }
-
     const TYPE_VARIABLE_FUNCTION = `<span class="text-pink-400">${type}</span>`;
+
     if (methodType === 'set' && field.setter) {
-      return `\t${PUBLIC} ${TYPE} <span class="text-blue-400">set${nameFormatted}${OPEN_PARENTESIS}${TYPE_VARIABLE_FUNCTION} <span class="text-white">${name}</span>${CLOSE_PARENTESIS}</span> ${OPEN_KEY}
-      \t${THIS}<span class="text-pink-400">${name}</span> = ${name};
-    ${CLOSE_KEY}\n`;
+      return `  ${PUBLIC} ${TYPE} <span class="text-blue-400">set${nameFormatted}${OPEN_PARENTESIS}${TYPE_VARIABLE_FUNCTION} <span class="text-white">${name}</span>${CLOSE_PARENTESIS}</span> ${OPEN_KEY}
+    ${THIS}<span class="text-pink-400">${name}</span> = ${name};
+  ${CLOSE_KEY}\n`;
     }
   };
 
-  const gettersFields = fields.map((field) => formatMethod(field, 'get'));
-  const settersFields = fields.map((field) => formatMethod(field, 'set'));
-
-  const defaultConstructor = `
-\t<span class="text-green-500">public</span> <span class="text-yellow-300">${className}</span><span class="text-blue-400">()</span> <span class="text-yellow-400">{</span>
-\t<span class="text-yellow-400">}</span>
-  `;
-
-
   const allArgsConstructorParams = fields
-    .map((field) => `<span class="text-blue-500">${field.type}</span> <span class="text-white">${field.name}</span>`)
+    .map((field) => `<span class="text-pink-400">${field.type}</span> ${field.name}`)
     .join(", ");
   const allArgsConstructorBody = fields
-    .map((field) => `\t\t<span class="text-blue-400">this.</span><span class="text-white">${field.name}</span> = ${field.name};`)
+    .map((field) => `    ${THIS}<span class="text-pink-400">${field.name}</span> = ${field.name};`)
     .join("\n");
 
-  const allArgsConstructor = `
-\t<span class="text-green-500">public</span> <span class="text-yellow-300">${className}</span><span class="text-blue-400">(${allArgsConstructorParams})</span> <span class="text-yellow-400">{</span>
+  const allArgsConstructor = entity.allArgsConstructor && !lombok
+    ? `  <span class="text-green-500">public</span> <span class="text-yellow-300">${className}</span>${OPEN_PARENTESIS}${allArgsConstructorParams}${CLOSE_PARENTESIS} ${OPEN_KEY}
 ${allArgsConstructorBody}
-\t<span class="text-yellow-400">}</span>
-  `;
+  ${CLOSE_KEY}\n`
+    : null;
 
+  const noArgsConstructor = entity.voidConstructor && !lombok
+    ? `\n  <span class="text-green-500">public</span> <span class="text-yellow-300">${className}</span>${OPEN_PARENTESIS}${CLOSE_PARENTESIS} ${OPEN_KEY}${CLOSE_KEY}\n`
+    : null;
+
+  const lombokAnnotations = lombok
+    ? `<span class="text-purple-500">@Getter</span>\n<span class="text-purple-500">@Setter</span>\n<span class="text-purple-500">@NoArgsConstructor</span>\n<span class="text-purple-500">@AllArgsConstructor</span>`
+    : null;
+
+  const gettersFields = fields.map((field) => formatMethod(field, 'get'));
+  const settersFields = fields.map((field) => formatMethod(field, 'set'));
+  const idClass = `  <span class="text-purple-500">@Id</span>\n  <span class="text-purple-500">@GeneratedValue(strategy=GenerationType.AUTO)</span>\n  <span class="text-green-500">private</span> <span class="text-blue-500">Long</span> id;`;;
   const codeString = [
-    `<span class="text-green-500">public class</span> <span class="text-yellow-300">${className}</span> <span class="text-blue-400">{</span>`,
+    lombokAnnotations,
+    `<span class="text-purple-500">@Entity</span>`,
+    `<span class="text-green-500" >public class</span> <span class="text-yellow-300">${className}</span> <span class="text-blue-400">{</span>\n`,
+    "",
+    idClass,
     ...allFields,
-    defaultConstructor,
+    "",
+    noArgsConstructor,
+    "",
     allArgsConstructor,
+    "",
     ...gettersFields,
     ...settersFields,
-    `<span class="text-blue-400">}</span>`,
-  ].join("\n");
+    `<span class="text-blue-400" >}</span> `,
+  ].filter(Boolean)
+    .join("\n")
+    ;
 
   const plainTextCode = codeString.replace(/<[^>]+>/g, '');
 
@@ -83,22 +94,23 @@ ${allArgsConstructorBody}
       .then(() => {
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
-      })
-      .catch();
+      });
   };
+
   const handleDownload = () => {
     const blob = new Blob([plainTextCode], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `${className}.java`;
     link.click();
+    setIsDownload(true);
+    setTimeout(() => setIsDownload(false), 2000);
     URL.revokeObjectURL(link.href);
   };
 
   return (
-    <div className="relative">
-      {/* Contenedor del código */}
-      <div className="mr-20 text-white bg-codebg border border-gray-700 rounded overflow-auto max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] scrollbar">
+    <div className="relative aside-scrollbar">
+      <div className="mr-20 text-white bg-codebg border border-gray-700 rounded overflow-auto max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] ">
         <pre className="font-code text-lg">
           {codeString.split("\n").map((line, index) => (
             <div
@@ -113,17 +125,20 @@ ${allArgsConstructorBody}
           ))}
         </pre>
       </div>
-
-      <button
-        onClick={handleCopy}
-        className={`absolute top-2 right-24 py-2 px-4 transition-all duration-300 ${isCopied ? "text-green-500" : "text-white"
-          }`}
-      >
-        {isCopied ? "¡Copiado!" : "Copiar"}
-      </button>
-      <button onClick={handleDownload} className="w-full mr-20">
-        Download
-      </button>
+      <div className="absolute top-2 right-24">
+        <button
+          onClick={handleCopy}
+          className={`py-2 px-4 transition-all duration-300 ${isCopied ? "text-green-500" : "text-white"} `}
+        >
+          {isCopied ? "Copied!" : "Copy"}
+        </button>
+        <button
+          onClick={handleDownload}
+          className={`py-2 px-4 transition-all duration-300 ${isDownload ? "text-blue-500" : "text-white"} `}
+        >
+          {isDownload ? "Downloaded" : "Download"}
+        </button>
+      </div>
     </div>
   );
 };
