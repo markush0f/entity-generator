@@ -36,7 +36,7 @@ const EntityHistory: React.FC<Props> = ({ entity, onSelectEntity, setEntities, e
     <div className="mb-1 p-2 flex items-center justify-between w-full">
       <button className="text-left flex-1 overflow-hidden" onClick={handleClick}>
         <h1
-          className="text-xl max-w-full overflow-hidden whitespace-nowrap text-ellipsis"
+          className="lg:text-xl sm:text-2xl max-w-full overflow-hidden whitespace-nowrap text-ellipsis "
           style={{ display: 'block' }}
         >
           {entity.className}
@@ -51,7 +51,7 @@ const EntityHistory: React.FC<Props> = ({ entity, onSelectEntity, setEntities, e
           className="text-red-500 hover:text-red-700 transform hover:scale-110 transition-transform duration-200"
         >
           <img
-            width="20px"
+          className='lg:w-6 sm:w-7'
             src="icons/x.svg"
             alt="Delete"
           />
@@ -61,7 +61,7 @@ const EntityHistory: React.FC<Props> = ({ entity, onSelectEntity, setEntities, e
           className="text-blue-500 hover:text-blue-700 transform hover:scale-110 transition-transform duration-200"
         >
           <img
-            width="20px"
+            className='lg:w-6 sm:w-7'
             src="icons/edit.svg"
             alt="Edit"
           />

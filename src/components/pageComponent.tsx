@@ -4,6 +4,9 @@ import Aside from './aside';
 import CreateEntity from './createEntity';
 import EntityJava from './entityJava';
 import '../styles/styles.css';
+import { motion } from "framer-motion";
+
+
 interface Props {
     firstEntities: IEntity[];
 }
@@ -39,26 +42,32 @@ const PageComponent: React.FC<Props> = ({ firstEntities }) => {
     };
 
     return (
-        <div className="grid grid-cols-5">
-            <div className="row-span-5 ml-20 mt-20">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 p-4">
+            {/* Aside - Ocupa toda la fila en móviles, pero una columna específica en pantallas más grandes */}
+            <div className="row-span-5 sm:col-span-1 lg:ml-20 lg:mt-20">
                 <Aside
                     entities={entities}
                     onSelectEntity={handleSelectEntity}
                     setEntities={setEntities}
                 />
             </div>
-            <div className="col-span-2 row-span-5 mt-20">
+
+            {/* CreateEntity - Ocupa toda la fila en móviles, ajusta su tamaño en pantallas medianas y grandes */}
+            <div className="sm:col-span-1 lg:col-span-2 lg:row-span-5 lg:mt-20">
                 <CreateEntity onAddEntity={addEntity} />
             </div>
-            <div className="col-span-2 row-span-5 col-start-4 mt-20">
-                {/* Renderiza EntityJava solo si hay una entidad seleccionada */}
+
+            {/* EntityJava o mensaje alternativo */}
+            <div className="sm:col-span-2 lg:col-span-2 lg:col-start-4 lg:row-span-5 lg:mt-20 lg:mr-20">
                 {selectedEntity ? (
                     <EntityJava entity={selectedEntity} />
                 ) : (
                     <p className="text-center text-gray-500">No entity selected</p>
                 )}
             </div>
+          
         </div>
+
     );
 };
 

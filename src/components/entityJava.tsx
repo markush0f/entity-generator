@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type IEntity from '../types/Entity.type';
 import type EntityField from '../types/EntityField.type';
+import { motion } from "framer-motion";
 
 interface Props {
   entity: IEntity;
@@ -110,8 +111,8 @@ ${allArgsConstructorBody}
 
   return (
     <div className="relative aside-scrollbar">
-      <div className="mr-20 text-white bg-codebg border border-gray-700 rounded overflow-auto max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] ">
-        <pre className="font-code text-lg">
+      <div className=" text-white bg-codebg border border-gray-700 rounded overflow-auto max-h-[calc(100vh-10rem)] max-w-full h-[calc(100vh-10rem)] ">
+        <pre className="font-code lg:text-lg sm:text-xl">
           {codeString.split("\n").map((line, index) => (
             <div
               className="flex items-start transition-all duration-300 code-line"
@@ -125,21 +126,25 @@ ${allArgsConstructorBody}
           ))}
         </pre>
       </div>
-      <div className="absolute top-2 right-24">
-        <button
+      <div className="absolute top-0.5 right-8 mt-4 opacity-55">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.8 }}
           onClick={handleCopy}
-          className={`py-2 px-4 transition-all duration-300 ${isCopied ? "text-green-500" : "text-white"} `}
+          className={`mr-2 py-1 px-4 border-2 rounded-full lg:text-sm ${isCopied ? "text-green-500 border-green-500" : "text-white"} `}
         >
           {isCopied ? "Copied!" : "Copy"}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.8 }}
+          className={`py-1 ml-2 px-4  border-2 rounded-full lg:text-sm ${isDownload ? "text-blue-500 border-blue-500" : "text-white"} `}
           onClick={handleDownload}
-          className={`py-2 px-4 transition-all duration-300 ${isDownload ? "text-blue-500" : "text-white"} `}
         >
           {isDownload ? "Downloaded" : "Download"}
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </div >
   );
 };
 

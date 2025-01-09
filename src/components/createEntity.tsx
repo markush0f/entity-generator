@@ -90,98 +90,99 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
 
   return (
     <div className="p-4 sm:p-8 max-w-full sm:max-w-xl mx-auto">
-      <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center">Add Entity</h1>
-
-      <form onSubmit={createEntity} className="space-y-4">
-        <div>
-          <label htmlFor="className" className="block font-medium mb-1">Class name:</label>
-          <input
-            type="text"
-            id="className"
-            value={className}
-            onChange={(e) => setClassName(e.target.value)}
-            className="w-full border border-gray-300 bg-codebg rounded-md shadow-sm focus:outline-none px-2 py-2"
-          />
-          {classNameError && <p className="text-red-500 text-sm mt-1">{classNameError}</p>}
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-          <label className="flex items-center space-x-2">
-            <span className="text-sm font-medium">Void Constructor</span>
-            <input
-              type="checkbox"
-              checked={voidConstructor}
-              onChange={(e) => setVoidConstructor(e.target.checked)}
-              className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
-            />
-          </label>
-          <label className="flex items-center space-x-2">
-            <span className="text-sm font-medium">Constructor</span>
-            <input
-              type="checkbox"
-              checked={allArgsConstructor}
-              onChange={(e) => setAllArgsConstructor(e.target.checked)}
-              className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
-            />
-          </label>
-          <label className="flex items-center space-x-2">
-            <span className="text-sm font-medium">Lombok</span>
-            <input
-              type="checkbox"
-              checked={lombok}
-              onChange={(e) => setLombok(e.target.checked)}
-              className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
-            />
-          </label>
-          <label className="flex items-center space-x-2">
-            <span className="text-sm font-medium">id(auto)</span>
-            <input
-              type="checkbox"
-              checked={idClass}
-              onChange={(e) => setIdClass(e.target.checked)}
-              className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
-            />
-          </label>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full mt-4 border-2 border-codebg hover:border-green-600 text-white py-2 px-4 rounded-lg"
-        >
-          Create Entity
-        </button>
-      </form>
-
-      {fields.length > 0 && (
-        <div className="mt-6">
-          <h2 className="text-lg font-semibold text-center sm:text-left">Fields</h2>
-          <ul className="list-disc list-inside space-y-2 max-h-52 overflow-auto scrollbar">
-            {fields.map((field, index) => (
-              <li key={index} className="text-center sm:text-left">
-                <span className="font-medium">{field.name}</span> : {field.type}
-                {field.getter && ' (Getter)'}
-                {field.setter && ' (Setter)'}
-                <button onClick={() => cancelField(field.name)} className="ml-4 text-red-500">X</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <div className="mt-4">
-        {showAddField ? (
-          <CreateField addFieldForm={addFieldForm} onCancel={toggleFields} />
-        ) : (
-          <button
-            onClick={toggleFields}
-            type="button"
-            className="w-full border-2 border-codebg hover:border-blue-600 text-white py-2 px-4 rounded-lg"
-          >
-            Add Field
-          </button>
-        )}
+    <h1 className="text-xl sm:text-3xl font-bold mb-4 text-center">Add Entity</h1>
+  
+    <form onSubmit={createEntity} className="space-y-4">
+      <div>
+        <label htmlFor="className" className="block font-medium mb-1 sm:text-lg">Class name:</label>
+        <input
+          type="text"
+          id="className"
+          value={className}
+          onChange={(e) => setClassName(e.target.value)}
+          className="w-full border border-gray-300 bg-codebg rounded-md shadow-sm focus:outline-none px-2 py-2"
+        />
+        {classNameError && <p className="text-red-500 text-sm sm:text-base mt-1">{classNameError}</p>}
       </div>
+  
+      <div className="grid grid-cols-2 gap-4">
+        <label className="flex items-center space-x-2">
+          <span className="text-sm sm:text-base font-medium">Void Constructor</span>
+          <input
+            type="checkbox"
+            checked={voidConstructor}
+            onChange={(e) => setVoidConstructor(e.target.checked)}
+            className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
+          />
+        </label>
+        <label className="flex items-center space-x-2">
+          <span className="text-sm sm:text-base font-medium">Constructor</span>
+          <input
+            type="checkbox"
+            checked={allArgsConstructor}
+            onChange={(e) => setAllArgsConstructor(e.target.checked)}
+            className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
+          />
+        </label>
+        <label className="flex items-center space-x-2">
+          <span className="text-sm sm:text-base font-medium">Lombok</span>
+          <input
+            type="checkbox"
+            checked={lombok}
+            onChange={(e) => setLombok(e.target.checked)}
+            className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
+          />
+        </label>
+        <label className="flex items-center space-x-2">
+          <span className="text-sm sm:text-base font-medium">id(auto)</span>
+          <input
+            type="checkbox"
+            checked={idClass}
+            onChange={(e) => setIdClass(e.target.checked)}
+            className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded"
+          />
+        </label>
+      </div>
+  
+      <button
+        type="submit"
+        className="w-full mt-4 border-2 border-codebg hover:border-green-600 text-white py-2 px-4 rounded-lg sm:text-lg"
+      >
+        Create Entity
+      </button>
+    </form>
+  
+    {fields.length > 0 && (
+      <div className="mt-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Fields</h2>
+        <ul className="list-disc list-inside space-y-2 max-h-52 overflow-auto scrollbar">
+          {fields.map((field, index) => (
+            <li key={index} className="text-center text-sm sm:text-base">
+              <span className="font-medium">{field.name}</span> : {field.type}
+              {field.getter && ' (Getter)'}
+              {field.setter && ' (Setter)'}
+              <button onClick={() => cancelField(field.name)} className="ml-4 text-red-500 sm:text-base">X</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  
+    <div className="mt-4">
+      {showAddField ? (
+        <CreateField addFieldForm={addFieldForm} onCancel={toggleFields} />
+      ) : (
+        <button
+          onClick={toggleFields}
+          type="button"
+          className="w-full border-2 border-codebg hover:border-blue-600 text-white py-2 px-4 rounded-lg sm:text-lg"
+        >
+          Add Field
+        </button>
+      )}
     </div>
+  </div>
+  
 
   );
 
