@@ -89,8 +89,8 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
   }
 
   return (
-    <div className="p-8 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">Add Entity</h1>
+    <div className="p-4 sm:p-8 max-w-full sm:max-w-xl mx-auto">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center">Add Entity</h1>
 
       <form onSubmit={createEntity} className="space-y-4">
         <div>
@@ -105,7 +105,7 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
           {classNameError && <p className="text-red-500 text-sm mt-1">{classNameError}</p>}
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
           <label className="flex items-center space-x-2">
             <span className="text-sm font-medium">Void Constructor</span>
             <input
@@ -153,11 +153,11 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
       </form>
 
       {fields.length > 0 && (
-        <div className="mt-6 ">
-          <h2 className="text-lg font-semibold">Fields</h2>
-          <ul className="list-disc list-inside space-y-2 max-h-52  overflow-auto scrollbar">
+        <div className="mt-6">
+          <h2 className="text-lg font-semibold text-center sm:text-left">Fields</h2>
+          <ul className="list-disc list-inside space-y-2 max-h-52 overflow-auto scrollbar">
             {fields.map((field, index) => (
-              <li key={index}>
+              <li key={index} className="text-center sm:text-left">
                 <span className="font-medium">{field.name}</span> : {field.type}
                 {field.getter && ' (Getter)'}
                 {field.setter && ' (Setter)'}
@@ -168,7 +168,7 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
         </div>
       )}
 
-      <div className="mt-4 ">
+      <div className="mt-4">
         {showAddField ? (
           <CreateField addFieldForm={addFieldForm} onCancel={toggleFields} />
         ) : (
@@ -182,6 +182,7 @@ const CreateEntity: React.FC<Props> = ({ onAddEntity }) => {
         )}
       </div>
     </div>
+
   );
 
 };

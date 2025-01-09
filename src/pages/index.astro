@@ -1,8 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import LogoTop from "../components/logoTop.astro";
 import PageComponent from "../components/pageComponent";
 import type IEntity from "../types/Entity.type";
+import Top from "../components/top";
 const firstEntities: IEntity[] = [
   {
     allArgsConstructor: true,
@@ -38,20 +38,6 @@ const firstEntities: IEntity[] = [
 ---
 
 <Layout>
-  <LogoTop />
-  <script>
-    let wasResized = false; 
-
-    function checkScreenSize() {
-      if (window.innerWidth < 1600 && !wasResized) {
-        window.location.href = "/no-responsive"; 
-        wasResized = true; 
-      }
-    }
-
-    window.addEventListener("resize", checkScreenSize);
-
-    checkScreenSize();
-  </script>
+  <Top client:load />
   <PageComponent firstEntities={firstEntities} client:load />
 </Layout>

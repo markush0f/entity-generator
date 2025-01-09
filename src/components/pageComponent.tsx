@@ -16,7 +16,7 @@ const PageComponent: React.FC<Props> = ({ firstEntities }) => {
         if (!localStorage.getItem('hasVisited')) {
 
             localStorage.setItem('entities', JSON.stringify(firstEntities));
-            localStorage.setItem('hasVisited', 'true'); 
+            localStorage.setItem('hasVisited', 'true');
         }
         const storedEntities = JSON.parse(localStorage.getItem('entities') || '[]');
         setEntities(storedEntities);
