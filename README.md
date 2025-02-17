@@ -1,6 +1,6 @@
 # 🚀 Generador de Entidades  
 
-Este es un generador de entidades accesible a través de una web construida con **Astro** y **React**. Permite definir entidades mediante un formulario y descargarlas para su uso en cualquier proyecto.  
+Este es un generador de entidades accesible a través de una web construida con **Astro**, **React**, **Tailwind** y **Typescript**. Permite definir entidades mediante un formulario y descargarlas para su uso en cualquier proyecto.  
 
 ## 📌 Características  
 
