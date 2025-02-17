@@ -1,48 +1,31 @@
-# Astro Starter Kit: Basics
+# 🚀 Generador de Entidades  
 
-```sh
-npm create astro@latest -- --template basics
-```
+Este es un generador de entidades accesible a través de una web construida con **Astro** y **React**. Permite definir entidades mediante un formulario y descargarlas para su uso en cualquier proyecto.  
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 📌 Características  
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- ✅ **Interfaz web intuitiva** con Astro y React  
+- ✅ **Generación dinámica de entidades**  
+- ✅ **Descarga de archivos listos para copiar y usar**  
+- ✅ **Soporte para relaciones entre entidades**  
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## 🚀 Uso  
 
-## 🚀 Project Structure
+1. Accede a la web del generador.  
+2. Completa el formulario con los detalles de la entidad.  
+3. Descarga los archivos generados y cópialos en tu proyecto.  
 
-Inside of your Astro project, you'll see the following folders and files:
+## 📦 Instalación y Ejecución  
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Sigue estos pasos para clonar y ejecutar el proyecto localmente:  
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+```bash
+# Clona el repositorio
+git clone https://github.com/markush0f/entity-generator
+cd tu-repositorio
 
-## 🧞 Commands
+# Instala dependencias
+npm install
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+# Inicia el proyecto en modo desarrollo
+npm run dev
