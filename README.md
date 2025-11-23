@@ -1,31 +1,49 @@
-# 🚀 Generador de Entidades  
+# 🚀 Entity Generator for Java
 
-Este es un generador de entidades accesible a través de una web construida con **Astro**, **React**, **Tailwind** y **Typescript**. Permite definir entidades mediante un formulario y descargarlas para su uso en cualquier proyecto.  
+A lightweight and intuitive web-based tool for generating Java entities.  
+Built with **Astro**, **React**, **Tailwind CSS**, and **TypeScript**, this generator allows you to quickly define entities through a clean UI and download ready-to-use Java classes — including support for fields, types, and relationships.
 
-## 📌 Características  
+---
 
-- ✅ **Interfaz web intuitiva** con Astro y React  
-- ✅ **Generación dinámica de entidades**  
-- ✅ **Descarga de archivos listos para copiar y usar**  
-- ✅ **Soporte para relaciones entre entidades**  
+## ✨ Features
 
-## 🚀 Uso  
+- **Modern Web UI** powered by Astro + React  
+- **Dynamic entity generation** based on user input  
+- **Support for relationships** (OneToOne, OneToMany, ManyToOne, etc.)  
+- **Instant file download** of generated Java entity classes  
+- **Type-safe field definitions**  
+- **Fast, clean, and framework-agnostic output** (usable in any Java project)
 
-1. Accede a la web del generador.  
-2. Completa el formulario con los detalles de la entidad.  
-3. Descarga los archivos generados y cópialos en tu proyecto.  
+---
 
-## 📦 Instalación y Ejecución  
+## 🧩 How It Works
 
-Sigue estos pasos para clonar y ejecutar el proyecto localmente:  
+1. Open the web interface.
+2. Define your entity name, fields, and optional relationships.
+3. Download the generated Java entity file (.java).
+4. Add it directly to your Spring Boot / Jakarta EE / Hibernate / custom Java project.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Astro** – Static-first web framework  
+- **React** – Dynamic client-side components  
+- **Tailwind CSS** – Utility-first styling  
+- **TypeScript** – Type-safe logic  
+- **Vite** – Fast development and bundling  
+
+---
+
+## 📦 Installation & Local Development
 
 ```bash
-# Clona el repositorio
+# Clone the repository
 git clone https://github.com/markush0f/entity-generator
-cd tu-repositorio
+cd entity-generator
 
-# Instala dependencias
+# Install dependencies
 npm install
 
-# Inicia el proyecto en modo desarrollo
+# Start development server
 npm run dev
